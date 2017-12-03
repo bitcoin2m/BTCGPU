@@ -8,7 +8,6 @@
 
 #include "uint256.h"
 #include "arith_uint256.h"
-#include "base58.h"
 
 #include "tinyformat.h"
 #include "util.h"
