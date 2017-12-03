@@ -82,6 +82,11 @@ public:
     void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout);
     /** Checkes if the pubkey script is correct for a given block height */
     bool IsPremineAddressScript(const CScript& scriptPubKey, uint32_t height) const;
+    /** Return the founder's reward address and script for a given block height */
+    int GetLastFoundersRewardBlockHeight(int height) const;
+    std::string GetFoundersRewardAddressAtHeight(int height) const;
+    CScript GetFoundersRewardScriptAtHeight(int height) const;
+    std::string GetFoundersRewardAddressAtIndex(int i) const;
 protected:
     CChainParams() {}
 
@@ -104,6 +109,7 @@ protected:
     CCheckpointData checkpointData;
     ChainTxData chainTxData;
     std::vector<std::vector<std::string> > vPreminePubkeys;
+    std::vector<std::string> vFoundersRewardAddress;
 };
 
 /**
