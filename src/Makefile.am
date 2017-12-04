@@ -66,11 +66,11 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += bgoldd
+  bin_PROGRAMS += btc2d
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += bgold-cli bitcoin-tx
+  bin_PROGRAMS += btc2-cli bitcoin-tx
 endif
 
 .PHONY: FORCE check-symbols check-security
@@ -370,16 +370,16 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # bitcoind binary #
-bgoldd_SOURCES = bitcoind.cpp
-bgoldd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-bgoldd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bgoldd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+btc2d_SOURCES = bitcoind.cpp
+btc2d_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+btc2d_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+btc2d_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bgoldd_SOURCES += bitcoind-res.rc
+btc2d_SOURCES += bitcoind-res.rc
 endif
 
-bgoldd_LDADD = \
+btc2d_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBUNIVALUE) \
@@ -393,19 +393,19 @@ bgoldd_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-bgoldd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(LIBEQUIHASH_LIBS)
+btc2d_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(LIBEQUIHASH_LIBS)
 
 # bitcoin-cli binary #
-bgold_cli_SOURCES = bitcoin-cli.cpp
-bgold_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-bgold_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bgold_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+btc2_cli_SOURCES = bitcoin-cli.cpp
+btc2_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+btc2_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+btc2_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bgold_cli_SOURCES += bitcoin-cli-res.rc
+btc2_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-bgold_cli_LDADD = \
+btc2_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_CONSENSUS) \
@@ -414,7 +414,7 @@ bgold_cli_LDADD = \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
 
-bgold_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS) $(LIBEQUIHASH_LIBS)
+btc2_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS) $(LIBEQUIHASH_LIBS)
 #
 
 # bitcoin-tx binary #
