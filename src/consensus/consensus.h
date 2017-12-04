@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-static const unsigned int BITCOINX_FORK_HEIGHT = 500000;
+static const unsigned int BITCOINX_FORK_HEIGHT = 494784;
 static const unsigned int BIPCOINX_FORK_BUFFER = (144 * 90);
 static const unsigned int LEGACY_MAX_BLOCK_BASE_SIZE = (1 * 1000 * 1000);
 
