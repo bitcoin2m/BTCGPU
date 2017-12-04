@@ -92,7 +92,8 @@ public:
     CMainParams() {
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 210000;
-        consensus.nSubsidyQuaterInterval = 240000;
+        consensus.nSoftInitialFeeInterval = 629999;
+        consensus.nSoftSecondFeeInterval = 839999;
         consensus.BIP34Height = 227931;
         consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
         consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
@@ -358,6 +359,8 @@ public:
     CRegTestParams() {
         strNetworkID = "regtest";
         consensus.nSubsidyHalvingInterval = 150;
+        consensus.nSoftInitialFeeInterval = 300;
+        consensus.nSoftSecondFeeInterval = 600;
         consensus.BIP34Height = 100000000; // BIP34 has not activated on regtest (far in the future so block v1 are not rejected in tests)
         consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in rpc activation tests)
@@ -535,24 +538,25 @@ bool CChainParams::IsPremineAddressScript(const CScript& scriptPubKey, uint32_t 
     return scriptPubKey == target_scriptPubkey;
 }
 
-int CChainParams::GetLastFoundersRewardBlockHeight(int nHeight) const {
+int CChainParams::GetLastSoftFeeBlockHeight(int nHeight) const {
    const CChainParams& chainparams = Params();
-   if (nHeight > 0 && nHeight <= chainparams.GetConsensus().nSubsidyHalvingInterval) {
-      return chainparams.GetConsensus().nSubsidyHalvingInterval;
+   if (nHeight > 0 && nHeight <= chainparams.GetConsensus().nSoftInitialFeeInterval) {
+      return chainparams.GetConsensus().nSoftInitialFeeInterval;
    }  
 
-   if (nHeight > chainparams.GetConsensus().nSubsidyHalvingInterval && 
-        nHeight <= chainparams.GetConsensus().nSubsidyQuaterInterval) {
-      return chainparams.GetConsensus().nSubsidyQuaterInterval;
+   if (nHeight > chainparams.GetConsensus().nSoftInitialFeeInterval && 
+        nHeight <= chainparams.GetConsensus().nSoftSecondFeeInterval) {
+      return chainparams.GetConsensus().nSoftSecondFeeInterval;
    }
 
+   // No Soft Fee after nSoftSecondFeeInterval
    return 0;
 }
  
 // Block height must be >0 and <=last founders reward block height
 // Index variable i ranges from 0 - (vFoundersRewardAddress.size()-1)
 std::string CChainParams::GetFoundersRewardAddressAtHeight(int nHeight) const {
-    int maxHeight = GetLastFoundersRewardBlockHeight(nHeight);
+    int maxHeight = GetLastSoftFeeBlockHeight(nHeight);
     assert(nHeight > 0 && nHeight <= maxHeight);
 
     size_t addressChangeInterval = (maxHeight + vFoundersRewardAddress.size()) / vFoundersRewardAddress.size();
@@ -563,7 +567,7 @@ std::string CChainParams::GetFoundersRewardAddressAtHeight(int nHeight) const {
 // Block height must be >0 and <=last founders reward block height
 // The founders reward address is expected to be a multisig (P2SH) address
 CScript CChainParams::GetFoundersRewardScriptAtHeight(int nHeight) const {
-    assert(nHeight > 0 && nHeight <= GetLastFoundersRewardBlockHeight(nHeight));
+    assert(nHeight > 0 && nHeight <= GetLastSoftFeeBlockHeight(nHeight));
 
     CBitcoinAddress address(GetFoundersRewardAddressAtHeight(nHeight).c_str());
     assert(address.IsValid());

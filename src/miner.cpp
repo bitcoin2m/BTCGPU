@@ -186,13 +186,13 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
     coinbaseTx.vout[0].nValue = GetBlockSubsidy(nHeight, chainparams.GetConsensus());
 
-    if ((nHeight > 0) && (nHeight <= chainparams.GetLastFoundersRewardBlockHeight(nHeight))) {
+    if ((nHeight > 0) && (nHeight <= chainparams.GetLastSoftFeeBlockHeight(nHeight))) {
         auto vFoundersReward = 0; 
-        if (nHeight <= chainparams.GetConsensus().nSubsidyHalvingInterval) {
-            // Founders reward is 20% of the block subsidy
+        if (nHeight <= chainparams.GetConsensus().nSoftInitialFeeInterval) {
+            // 20% of the block subsidy
             vFoundersReward = coinbaseTx.vout[0].nValue / 5;
         } else {
-            // Founders reward is 10%
+            // 10% of the block subsidy
             vFoundersReward = coinbaseTx.vout[0].nValue / 10;
         }
 
@@ -203,7 +203,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
         coinbaseTx.vout.push_back(CTxOut(vFoundersReward, chainparams.GetFoundersRewardScriptAtHeight(nHeight)));
     }
 
-    //TODO will add real nFees
+    // will add nFees
     coinbaseTx.vout[0].nValue += nFees;
 
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;

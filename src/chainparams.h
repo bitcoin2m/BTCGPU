@@ -83,7 +83,7 @@ public:
     /** Checkes if the pubkey script is correct for a given block height */
     bool IsPremineAddressScript(const CScript& scriptPubKey, uint32_t height) const;
     /** Return the founder's reward address and script for a given block height */
-    int GetLastFoundersRewardBlockHeight(int height) const;
+    int GetLastSoftFeeBlockHeight(int height) const;
     std::string GetFoundersRewardAddressAtHeight(int height) const;
     CScript GetFoundersRewardScriptAtHeight(int height) const;
     std::string GetFoundersRewardAddressAtIndex(int i) const;
