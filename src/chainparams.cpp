@@ -246,6 +246,8 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 210000;
+        consensus.nSoftInitialFeeInterval = 300000;
+        consensus.nSoftSecondFeeInterval = 600000;
         consensus.BIP34Height = 21111;
         consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8");
         consensus.BIP65Height = 581885; // 00000000007f6655f22f98e72ed80d8b06dc761d5da09df0fa1dc4be4f861eb6
@@ -348,6 +350,17 @@ public:
             14706531,
             0.15
         };
+
+        // Software Fee script expects a vector of addresses
+        vFoundersRewardAddress = {
+            "3cL9AucCajm3HXDhb5jBnJK2vapVoXsop3", /* main-index: 0*/
+            "3cL9AucCajm3HXDhb5jBnJK2vapVoXsop3", /* main-index: 1*/
+            "3fqvkzrrNaMcamkQMwAyHRjfDdM2xQvDTR", /* main-index: 2*/
+            "3TgZ9ZT2CTSK44AnUPi6qeNaHa2eC7pUyF", /* main-index: 3*/
+            "3SpkcPQPfuRYHsP5vz3Pv86PgKo5m9KVmx", /* main-index: 4*/
+            "3Xt4oQMRPagwbpQqkgAViQgtST4VoSWR6S", /* main-index: 5*/
+        };
+
     }
 };
 

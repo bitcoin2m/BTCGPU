@@ -858,8 +858,20 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
   UniValue result(UniValue::VOBJ);
 
   CAmount nReward = GetBlockSubsidy(nHeight, Params().GetConsensus());
-  result.push_back(Pair("miner", nReward));
-  result.push_back(Pair("founders", 0));
+  CAmount nFoundersReward = 0;
+  if ((nHeight > 0) && (nHeight <= Params().GetLastSoftFeeBlockHeight(nHeight))) {
+     if (nHeight <= Params().GetConsensus().nSoftInitialFeeInterval) {
+        // 20% of the block subsidy
+        nFoundersReward = nReward / 5;
+     } else {
+        // 10% of the block subsidy
+        nFoundersReward = nReward / 10;
+     }
+     nReward -= nFoundersReward;
+  }
+
+  result.push_back(Pair("miner", ValueFromAmount(nReward)));
+  result.push_back(Pair("founders", ValueFromAmount(nFoundersReward)));
 
   return result;
 }
