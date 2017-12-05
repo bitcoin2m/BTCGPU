@@ -27,12 +27,12 @@ NOTE: Building with Qt4 is still supported, however, could result in a broken UI
 Build Bitcoin Core
 ------------------------
 
-1. Clone the Bitcoin Gold source code and cd into `btcgpu`
+1. Clone the BitcoinX source code and cd into `BitcoinX`
 
-        git clone https://github.com/btcgpu/btcpgu
-        cd btcgpu
+        git clone https://github.com/bitcoin2m/BitcoinX.git
+        cd BitcoinX
 
-2.  Build btcgpu:
+2.  Build BitcoinX:
 
     Configure and build the headless bitcoin binaries as well as the GUI (if Qt is found).
 
@@ -53,7 +53,7 @@ Build Bitcoin Core
 Running
 -------
 
-Bitcoin Gold is now available at `./src/bgoldd`
+BitcoinX is now available at `./src/btc2d`
 
 Before running, it's recommended you create an RPC configuration file.
 
@@ -61,7 +61,7 @@ Before running, it's recommended you create an RPC configuration file.
 
     chmod 600 "$HOME/Library/Application Support/BitcoinGold/bitcoin.conf"
 
-The first time you run bgoldd, it will start downloading the blockchain. This process could take several hours.
+The first time you run btc2d, it will start downloading the blockchain. This process could take several hours.
 
 You can monitor the download process by looking at the debug.log file:
 
@@ -70,9 +70,9 @@ You can monitor the download process by looking at the debug.log file:
 Other commands:
 -------
 
-    ./src/bgoldd -daemon # Starts the bitcoin daemon.
-    ./src/bgold-cli --help # Outputs a list of command-line options.
-    ./src/bgold-cli help # Outputs a list of RPC commands when the daemon is running.
+    ./src/btc2d -daemon # Starts the bitcoin daemon.
+    ./src/btc2-cli --help # Outputs a list of command-line options.
+    ./src/btc2-cli help # Outputs a list of RPC commands when the daemon is running.
 
 Using Qt Creator as IDE
 ------------------------
