@@ -353,12 +353,8 @@ public:
 
         // Software Fee script expects a vector of addresses
         vFoundersRewardAddress = {
-            "3cL9AucCajm3HXDhb5jBnJK2vapVoXsop3", /* main-index: 0*/
-            "3cL9AucCajm3HXDhb5jBnJK2vapVoXsop3", /* main-index: 1*/
-            "3fqvkzrrNaMcamkQMwAyHRjfDdM2xQvDTR", /* main-index: 2*/
-            "3TgZ9ZT2CTSK44AnUPi6qeNaHa2eC7pUyF", /* main-index: 3*/
-            "3SpkcPQPfuRYHsP5vz3Pv86PgKo5m9KVmx", /* main-index: 4*/
-            "3Xt4oQMRPagwbpQqkgAViQgtST4VoSWR6S", /* main-index: 5*/
+            "2MzQwSSnBHWHqSAqtTVQ6v47XtaisrJa1Vc", /* main-index: 0*/
+            "2NFbQdbmL2LsTYjUXqLkEjmcnUPYgisP9Rk", /* main-index: 1*/
         };
 
     }
@@ -459,6 +455,12 @@ public:
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
+
+        // Software Fee script expects a vector of addresses
+        vFoundersRewardAddress = {
+            "2NFbQdbmL2LsTYjUXqLkEjmcnUPYgisP9Rk", /* main-index: 0*/
+        };
+
     }
     
 };
