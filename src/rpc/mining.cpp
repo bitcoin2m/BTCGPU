@@ -859,7 +859,7 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
 
   CAmount nReward = GetBlockSubsidy(nHeight, Params().GetConsensus());
   CAmount nFoundersReward = 0;
-  if ((nHeight > 0) && (nHeight <= Params().GetLastSoftFeeBlockHeight(nHeight))) {
+  if ((nHeight > Params().GetConsensus().BTGHeight) && (nHeight <= Params().GetLastSoftFeeBlockHeight(nHeight))) {
      if (nHeight <= Params().GetConsensus().nSoftInitialFeeInterval) {
         // 20% of the block subsidy
         nFoundersReward = nReward / 5;
