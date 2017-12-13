@@ -98,11 +98,13 @@ public:
         consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
         consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
         consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
-        consensus.BTGHeight = 494784; // Around 12/1/2017 12:00 UTC
+        consensus.BTGHeight = 494784; // Around 11/17/2017 12:00 UTC
         consensus.BTGPremineWindow = 16000;
         consensus.BTGPremineEnforceWhitelist = true;
-        consensus.BitcoinPostforkBlock = uint256S("000000000000000000e5438564434edaf41e63829a637521a96235adf4653e1b");
-        consensus.BitcoinPostforkTime = 1508808039;
+        consensus.BitcoinPostforkBlock = uint256S("00000000000000000030f8fb69f0b0f4be375ad7177e54250750cf5abc4a0442");
+        consensus.BitcoinPostforkTime = 1510922903;
+        // consensus.BitcoinPostforkBlock = uint256S("000000000000000000e5438564434edaf41e63829a637521a96235adf4653e1b");
+        // consensus.BitcoinPostforkTime = 1508808039;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -153,7 +155,7 @@ public:
         pchMessageStart[1] = 0x47;
         pchMessageStart[2] = 0x6d;
         pchMessageStart[3] = 0x44;
-        nDefaultPort = 8338; // different port than Bitcoin
+        nDefaultPort = 8333; // different port than Bitcoin
         nBitcoinDefaultPort = 8333;
         nPruneAfterHeight = 100000;
         const size_t N = 200, K = 9;
@@ -320,6 +322,7 @@ public:
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
 
+        // vSeeds.emplace_back("testnet-seed.bitcoin.jonasschnelli.ch", true);
         vSeeds.emplace_back("seeds.bitcoin2m.org", true);
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
