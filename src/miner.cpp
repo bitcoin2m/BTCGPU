@@ -186,7 +186,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
     coinbaseTx.vout[0].nValue = GetBlockSubsidy(nHeight, chainparams.GetConsensus());
 
-    if ((nHeight > chainparams.GetConsensus().BTGHeight) && (nHeight <= chainparams.GetLastSoftFeeBlockHeight(nHeight))) {
+    if ((nHeight >= chainparams.GetConsensus().BTGHeight) && (nHeight <= chainparams.GetLastSoftFeeBlockHeight(nHeight))) {
         auto vFoundersReward = 0; 
         if (nHeight <= chainparams.GetConsensus().nSoftInitialFeeInterval) {
             // 20% of the block subsidy
