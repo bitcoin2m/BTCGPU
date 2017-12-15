@@ -1049,10 +1049,6 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     
     CAmount nSubsidy = 50 * COIN;
 
-    if (nHeight >= consensusParams.BTGHeight) {
-        CAmount nSubsidy = 12.5 * COIN;
-    }
-
     // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
     nSubsidy >>= halvings;
     return nSubsidy;
@@ -3159,6 +3155,9 @@ bool ProcessNewBlockHeaders(const std::vector<CBlockHeader>& headers, CValidatio
         for (const CBlockHeader& header : headers) {
             CBlockIndex *pindex = nullptr; // Use a temp pindex instead of ppindex to avoid a const_cast
             if (!AcceptBlockHeader(header, state, chainparams, &pindex)) {
+                if (ppindex) {
+                   *ppindex = pindex;
+                }
                 return false;
             }
             if (ppindex) {
