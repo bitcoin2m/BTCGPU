@@ -3070,7 +3070,11 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
 		fSegwitSeasoned = (VersionBitsState(pindexForkBuffer, consensusParams, Consensus::DEPLOYMENT_SEGWIT, versionbitscache) == THRESHOLD_ACTIVE);
     }
 
-	if (::GetSerializeSize(block, SER_NETWORK, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) > BitcoinX_MaxBlockBaseSize(nHeight, fSegWitActive))
+        int serialization_flags = SERIALIZE_TRANSACTION_NO_WITNESS;
+        if (block.nHeight < (uint32_t)consensusParams.BTGHeight) {
+            serialization_flags |= SERIALIZE_BLOCK_LEGACY;
+        }
+	if (::GetSerializeSize(block, SER_NETWORK, PROTOCOL_VERSION | serialization_flags) > BitcoinX_MaxBlockBaseSize(nHeight, fSegWitActive))
 		return state.DoS(100, false, REJECT_INVALID, "bad-blk-length", false, "size limits failed");
 
     // No witness data is allowed in blocks that don't commit to witness data, as this would otherwise leave room for spam

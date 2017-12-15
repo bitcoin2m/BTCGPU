@@ -92,7 +92,7 @@ public:
     CMainParams() {
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 210000;
-        consensus.nSoftInitialFeeInterval = 629999;
+        consensus.nSoftInitialFeeInterval = 692999;
         consensus.nSoftSecondFeeInterval = 839999;
         consensus.BIP34Height = 227931;
         consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
@@ -223,20 +223,26 @@ public:
 
        // TODO Founders reward script expects a vector of 2-of-3 multisig addresses
         vFoundersRewardAddress = {
-            "t3Vz22vK5z2LcKEdg16Yv4FFneEL1zg9ojd", /* main-index: 0*/
-            "t3cL9AucCajm3HXDhb5jBnJK2vapVoXsop3", /* main-index: 1*/
-            "t3fqvkzrrNaMcamkQMwAyHRjfDdM2xQvDTR", /* main-index: 2*/
-            "t3TgZ9ZT2CTSK44AnUPi6qeNaHa2eC7pUyF", /* main-index: 3*/
-            "t3SpkcPQPfuRYHsP5vz3Pv86PgKo5m9KVmx", /* main-index: 4*/
-            "t3Xt4oQMRPagwbpQqkgAViQgtST4VoSWR6S", /* main-index: 5*/
-            "t3ayBkZ4w6kKXynwoHZFUSSgXRKtogTXNgb", /* main-index: 6*/
-            "t3adJBQuaa21u7NxbR8YMzp3km3TbSZ4MGB", /* main-index: 7*/
-            "t3K4aLYagSSBySdrfAGGeUd5H9z5Qvz88t2", /* main-index: 8*/
-            "t3RYnsc5nhEvKiva3ZPhfRSk7eyh1CrA6Rk", /* main-index: 9*/
-            "t3Ut4KUq2ZSMTPNE67pBU5LqYCi2q36KpXQ", /* main-index: 10*/
-            "t3ZnCNAvgu6CSyHm1vWtrx3aiN98dSAGpnD", /* main-index: 11*/
-            "t3fB9cB3eSYim64BS9xfwAHQUKLgQQroBDG", /* main-index: 12*/
-        };
+            //20%
+            "3KZDpkCLoERa4EgfvBUZAS4CYtV9AYjh9Q",   //494784 - 503999
+            "3H981d4rYvASp4REZc5z2bdL3PLnHG9aca",   //503400 - 524999
+            "3NpkQzXm7vPW6oG3Nix3XcJdEUpYE9cXWZ",   //545999
+            "33ijsa72XhTX5mnGFFNEC3snz6qGtcxrNj",   //566999
+            "39iacQ31eRYFBTaSeBZWMGLfambMY9rFNb",   //587999
+            "3Hi2aVSuiMLsEYEWMaJpjqvW8e792KDz6p",   //608999
+            "3KPxYtLcvvatkdVFU7hfn3JsZW3sSduvRT",   //629999
+            "32vZrzcZozedaPXhc5fsCDvQTrhTCy2BS8",   //650999
+            "3GUYmH6m21tsQzegBdtBZ9L4wpDKoyyCdU",   //671999
+            "39SoFJmiYcFnyCUJn5VuULeQPb9dHFLqNK",   //692999
+            //10%
+            "3AEiPrJf2L1JSX6EtiHxozSVQGpUzgpfEJ",   //713999
+            "35PuL8hYiEaPLoxPYNEDEKyrripzxKZrJE",   //734999
+            "3Hk75Z1z7S6mZHvxF9wDsGYRa9xKnCrmh1",   //755999
+            "3NELc2j7Yq5SDtyyqq4WAYsXTYeaRcpjxz",   //776999
+            "3NLQkbbxm5Y3BjAcSbg7qaM5g3kY911erv",   //797999
+            "3JuiFiL1PEcV8SH7mQmPW14nAKQhAkjYWC",   //818999
+            "3AemGuviyuWGRto39enxDbrUnuoXTf8Sew"    //839999
+            };
     }
 };
 
