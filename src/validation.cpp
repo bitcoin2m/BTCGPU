@@ -1049,10 +1049,6 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     
     CAmount nSubsidy = 50 * COIN;
 
-    if (nHeight >= consensusParams.BTGHeight) {
-        CAmount nSubsidy = 12.5 * COIN;
-    }
-
     // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
     nSubsidy >>= halvings;
     return nSubsidy;
@@ -3074,7 +3070,11 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
 		fSegwitSeasoned = (VersionBitsState(pindexForkBuffer, consensusParams, Consensus::DEPLOYMENT_SEGWIT, versionbitscache) == THRESHOLD_ACTIVE);
     }
 
-	if (::GetSerializeSize(block, SER_NETWORK, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) > BitcoinX_MaxBlockBaseSize(nHeight, fSegWitActive))
+        int serialization_flags = SERIALIZE_TRANSACTION_NO_WITNESS;
+        if (block.nHeight < (uint32_t)consensusParams.BTGHeight) {
+            serialization_flags |= SERIALIZE_BLOCK_LEGACY;
+        }
+	if (::GetSerializeSize(block, SER_NETWORK, PROTOCOL_VERSION | serialization_flags) > BitcoinX_MaxBlockBaseSize(nHeight, fSegWitActive))
 		return state.DoS(100, false, REJECT_INVALID, "bad-blk-length", false, "size limits failed");
 
     // No witness data is allowed in blocks that don't commit to witness data, as this would otherwise leave room for spam
@@ -3121,8 +3121,14 @@ static bool AcceptBlockHeader(const CBlockHeader& block, CValidationState& state
             pindex = miSelf->second;
             if (ppindex)
                 *ppindex = pindex;
-            if (pindex->nStatus & BLOCK_FAILED_MASK)
+            if (pindex->nStatus & BLOCK_FAILED_MASK) {
+                if (fBTGBootstrapping &&
+                    pindex->nHeight < chainparams.GetConsensus().BTGHeight) {
+	            pindex->nStatus &= ~BLOCK_FAILED_MASK;
+		    return true;
+                }
                 return state.Invalid(error("%s: block %s is marked invalid", __func__, hash.ToString()), 0, "duplicate");
+            }
             return true;
         }
 
@@ -3159,6 +3165,9 @@ bool ProcessNewBlockHeaders(const std::vector<CBlockHeader>& headers, CValidatio
         for (const CBlockHeader& header : headers) {
             CBlockIndex *pindex = nullptr; // Use a temp pindex instead of ppindex to avoid a const_cast
             if (!AcceptBlockHeader(header, state, chainparams, &pindex)) {
+                if (ppindex) {
+                   *ppindex = pindex;
+                }
                 return false;
             }
             if (ppindex) {
