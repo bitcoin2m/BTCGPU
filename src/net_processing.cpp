@@ -2959,7 +2959,6 @@ bool SendMessages(CNode* pto, CConnman& connman, const std::atomic<bool>& interr
                    got back an empty response.  */
                 if (pindexStart->pprev)
                     pindexStart = pindexStart->pprev;
-		    pindexStart = pindexStart->pprev; // back two
                 LogPrint(BCLog::NET, "initial getheaders (%d) to peer=%d (startheight:%d)\n", pindexStart->nHeight, pto->GetId(), pto->nStartingHeight);
                 uint256 stop_hash;
                 if (fBTGBootstrapping) {
