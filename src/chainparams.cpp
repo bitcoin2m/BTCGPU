@@ -99,12 +99,10 @@ public:
         consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
         consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
         consensus.BTGHeight = 494784; // Around 11/17/2017 12:00 UTC
-        consensus.BTGPremineWindow = 16000;
+        consensus.BTGPremineWindow = 0; // no premine
         consensus.BTGPremineEnforceWhitelist = true;
         consensus.BitcoinPostforkBlock = uint256S("00000000000000000030f8fb69f0b0f4be375ad7177e54250750cf5abc4a0442");
-        consensus.BitcoinPostforkTime = 1510922903;
-        // consensus.BitcoinPostforkBlock = uint256S("000000000000000000e5438564434edaf41e63829a637521a96235adf4653e1b");
-        // consensus.BitcoinPostforkTime = 1508808039;
+        consensus.BitcoinPostforkTime = 1510950958;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -174,9 +172,7 @@ public:
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
 
-        vSeeds.emplace_back("eu-dnsseed.bitcoingold-official.org", true);
-        vSeeds.emplace_back("dnsseed.bitcoingold.org", true);
-        vSeeds.emplace_back("dnsseed.btcgpu.org", true);
+        vSeeds.emplace_back("seeds.bitcoin2m.org", true);
 
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,128);
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
