@@ -108,7 +108,6 @@ void SendCoinsEntry::clear()
     ui->memoTextLabel_s->clear();
     ui->payAmount_s->clear();
 
-    // update the display unit, to not use the default ("BTG")
     updateDisplayUnit();
 }
 

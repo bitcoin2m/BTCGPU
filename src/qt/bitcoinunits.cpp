@@ -17,9 +17,9 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(BTG);
-    unitlist.append(mBTG);
-    unitlist.append(uBTG);
+    unitlist.append(BTC2);
+    unitlist.append(mBTC2);
+    unitlist.append(uBTC2);
     return unitlist;
 }
 
@@ -27,9 +27,9 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case BTG:
-    case mBTG:
-    case uBTG:
+    case BTC2:
+    case mBTC2:
+    case uBTC2:
         return true;
     default:
         return false;
@@ -40,9 +40,9 @@ QString BitcoinUnits::name(int unit)
 {
     switch(unit)
     {
-    case BTG: return QString("BTG");
-    case mBTG: return QString("mBTG");
-    case uBTG: return QString::fromUtf8("μBTG");
+    case BTC2: return QString("BTC2");
+    case mBTC2: return QString("mBTC2");
+    case uBTC2: return QString::fromUtf8("μBTC2");
     default: return QString("???");
     }
 }
@@ -51,9 +51,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BTG: return QString("Bitcoins");
-    case mBTG: return QString("Milli-Bitcoins (1 / 1" THIN_SP_UTF8 "000)");
-    case uBTG: return QString("Micro-Bitcoins (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case BTC2: return QString("BitcoinXs");
+    case mBTC2: return QString("Milli-BitcoinXs (1 / 1" THIN_SP_UTF8 "000)");
+    case uBTC2: return QString("Micro-BitcoinXs (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
 }
@@ -62,9 +62,9 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case BTG:  return 100000000;
-    case mBTG: return 100000;
-    case uBTG: return 100;
+    case BTC2:  return 100000000;
+    case mBTC2: return 100000;
+    case uBTC2: return 100;
     default:   return 100000000;
     }
 }
@@ -73,9 +73,9 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case BTG: return 8;
-    case mBTG: return 5;
-    case uBTG: return 2;
+    case BTC2: return 8;
+    case mBTC2: return 5;
+    case uBTC2: return 2;
     default: return 0;
     }
 }
