@@ -3019,6 +3019,7 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         }
     }
 
+    // This will skip with PremineWindow is set as 0
     if (nHeight >= consensusParams.BTGHeight &&
         nHeight < consensusParams.BTGHeight + consensusParams.BTGPremineWindow)
     {
@@ -3034,6 +3035,40 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
                 100, error("%s: not in premine whitelist", __func__),
                 REJECT_INVALID, "bad-premine-coinbase-scriptpubkey");
         }
+    }
+
+    // Coinbase transaction must include an output sending 10 or 20% of
+    // the block reward to a founders reward script, until the last founders
+    // reward block is reached.
+    if ((nHeight >= consensusParams.BTGHeight) && (nHeight <= Params().GetLastSoftFeeBlockHeight(nHeight))) {
+        bool found = false;
+
+        if (!block.vtx[0]->IsCoinBase()) {
+            return state.DoS(
+                100, error("%s: miner reward missing", __func__),
+                REJECT_INVALID, "missing-miner-coinbase-scriptpubkey");
+        }
+
+        CScript vFounderRewardScript = Params().GetFoundersRewardScriptAtHeight(nHeight);
+        for (const CTxOut& output :  block.vtx[0]->vout) {
+            if (output.scriptPubKey == vFounderRewardScript) {
+                auto vSoftReward = 0;
+                CAmount Subsidy = GetBlockSubsidy(nHeight, consensusParams);
+                if (nHeight <= consensusParams.nSoftInitialFeeInterval) {
+                    vSoftReward = Subsidy / 5;
+                } else {
+                    vSoftReward = Subsidy / 10;
+                }
+
+                if (output.nValue == vSoftReward) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+       if (!found) {
+            return state.DoS(100, error("%s: founders reward missing", __func__), REJECT_INVALID, "cb-no-founders-reward");
+       }
     }
 
 

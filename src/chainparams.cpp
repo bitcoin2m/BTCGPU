@@ -104,7 +104,7 @@ public:
         consensus.BitcoinPostforkBlock = uint256S("00000000000000000030f8fb69f0b0f4be375ad7177e54250750cf5abc4a0442");
         consensus.BitcoinPostforkTime = 1510950958;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimitStart = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         
         //based on https://github.com/BTCGPU/BTCGPU/issues/78
@@ -570,10 +570,17 @@ int CChainParams::GetLastSoftFeeBlockHeight(int nHeight) const {
    return 0;
 }
  
+//No fee paid after this block
+int CChainParams::GetMaxSoftFeeBlockHeight(int nHeight) const {
+   const CChainParams& chainparams = Params();
+
+  return chainparams.GetConsensus().nSoftSecondFeeInterval;
+}
+
 // Block height must be >0 and <=last founders reward block height
 // Index variable i ranges from 0 - (vFoundersRewardAddress.size()-1)
 std::string CChainParams::GetFoundersRewardAddressAtHeight(int nHeight) const {
-    int maxHeight = GetLastSoftFeeBlockHeight(nHeight);
+    int maxHeight = GetMaxSoftFeeBlockHeight(nHeight);
     assert(nHeight > 0 && nHeight <= maxHeight);
 
     size_t addressChangeInterval = (maxHeight + vFoundersRewardAddress.size()) / vFoundersRewardAddress.size();
@@ -584,13 +591,12 @@ std::string CChainParams::GetFoundersRewardAddressAtHeight(int nHeight) const {
 // Block height must be >0 and <=last founders reward block height
 // The founders reward address is expected to be a multisig (P2SH) address
 CScript CChainParams::GetFoundersRewardScriptAtHeight(int nHeight) const {
-    assert(nHeight > 0 && nHeight <= GetLastSoftFeeBlockHeight(nHeight));
 
     CBitcoinAddress address(GetFoundersRewardAddressAtHeight(nHeight).c_str());
     assert(address.IsValid());
     assert(address.IsScript());
-    CScriptID scriptID = GetScriptForDestination(address.Get()); 
-    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
+
+    CScript script = GetScriptForDestination(address.Get());
     return script;
 }
 
