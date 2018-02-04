@@ -325,7 +325,7 @@ public:
         // nodes with support for servicebits filtering should be at the top
 
         // vSeeds.emplace_back("testnet-seed.bitcoin.jonasschnelli.ch", true);
-        vSeeds.emplace_back("seeds.bitcoin2m.org", true);
+        vSeeds.emplace_back("testnet-seeds.bitcoin2m.org", true);
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
@@ -355,8 +355,8 @@ public:
 
         // Software Fee script expects a vector of addresses
         vFoundersRewardAddress = {
-            "2MzQwSSnBHWHqSAqtTVQ6v47XtaisrJa1Vc", /* main-index: 0*/
-            "2NFbQdbmL2LsTYjUXqLkEjmcnUPYgisP9Rk", /* main-index: 1*/
+            "mzEqENy3BVWNEnpSekobVxXWCKdgM8qw8C", /* main-index: 0*/
+            "mumCW2U1gLtnPrKHHM8KSw4rKEKGHTJxcS", /* main-index: 1*/
         };
 
     }
